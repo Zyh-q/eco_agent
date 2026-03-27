@@ -1,0 +1,74 @@
+# 服务器配置
+server:
+  servlet:
+    context-path: /api
+  port: 8080
+
+# Spring核心配置
+spring:
+  main:
+    allow-circular-references: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  # 数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/carbon_footprint?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 251717
+
+# MyBatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.carbon.entity
+  configuration:
+    use-generated-keys: true
+    map-underscore-to-camel-case: true
+
+# AI大模型配置
+ai:
+  # 千文模型配置（用于文本解析、对话等）
+  api-key: ""
+  api-url: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+  model: "qwen-turbo"
+  temperature: 0.7     # 生成随机性（0-1，越小越固定）
+# 字节跳动云雀大模型配置(图片解析）
+  multimodalModel: "ep-20260320185640-jhrd2"
+  multimodalApiUrl: https://ark.cn-beijing.volces.com/api/v3/chat/completions
+  multimodalApiKey: ""
+
+amap:
+  key:
+  geo-url: https://restapi.amap.com/v3/geocode/regeo
+  weather-url: https://restapi.amap.com/v3/weather/weatherInfo
+  default-city: 110000                     # 默认城市（北京）
+
+weather:
+  default-weather: "晴朗"
+
+carbon:
+  factors:
+    traffic:
+      car: 0.23
+      bus: 0.05
+      metro: 0.03
+      default-factor: 0.15
+    energy:
+      grid: 0.583
+      appliances:
+        ac: 1.0
+        computer: 0.5
+        tv: 0.2
+        light: 0.1
+      default-power: 0.5
+    food:
+      meat: 2.5
+      normal: 0.8
+      default-factor: 1.0
+    shopping:
+      default-factor: 1.2
+    waste:
+      plastic: 1.8
+      normal: 0.5
